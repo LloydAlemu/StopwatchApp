@@ -5,6 +5,7 @@ export default function App() {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
   const [laps, setLaps] = useState<number[]>([]);
+  const [showAbout, setShowAbout] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTimer = () => {
@@ -34,6 +35,23 @@ export default function App() {
     }
   };
 
+  // ABOUT PAGE VIEW
+  if (showAbout) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>About This App</Text>
+
+        <Text style={styles.aboutText}>
+          This stopwatch app was built using React Native and Expo as part of a class project.
+  It lets you start, pause, stop, and record lap times. 
+        </Text>
+
+        <Button title="Back to Stopwatch" onPress={() => setShowAbout(false)} />
+      </View>
+    );
+  }
+
+  // MAIN STOPWATCH VIEW
   return (
     <View style={styles.container}>
       <Text style={styles.timer}>{time}s</Text>
@@ -52,6 +70,10 @@ export default function App() {
           </Text>
         ))}
       </ScrollView>
+
+      <View style={{ marginTop: 20 }}>
+        <Button title="About App" onPress={() => setShowAbout(true)} />
+      </View>
     </View>
   );
 }
@@ -62,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#111",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 60,
+    padding: 20,
   },
   timer: {
     fontSize: 70,
@@ -84,5 +106,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingVertical: 4,
     textAlign: "center",
+  },
+  title: {
+    fontSize: 32,
+    color: "white",
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  aboutText: {
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
+    marginBottom: 30,
+    lineHeight: 26,
   },
 });
